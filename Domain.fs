@@ -6,7 +6,7 @@ type country = {name:string; owner:Power; isSupplyCenter:bool; isCoastal: bool;}
 
 type Zone = 
     | Country of country
-    | Sea
+    | Sea of string
 
 type Phase = 
     | Order
