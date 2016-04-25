@@ -1,6 +1,6 @@
 ﻿module Domain
 
-type Power = string
+type power = {name:string}
 
 type country = {name:string; owner:Power; isSupplyCenter:bool; isCoastal: bool;}
 
@@ -18,8 +18,8 @@ type Season =
     | Fall
 
 type Unit =
-    | Army of Zone * Power
-    | Fleet of Zone * Power
+    | Army of Zone * power
+    | Fleet of Zone * power
 
 type Move =
     | MoveOrAttack of Unit * Zone * Zone                // Army moves from Zone to Zone
