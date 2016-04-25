@@ -13,10 +13,6 @@ type Phase =
     | Retreat
     | Build
 
-type Season = 
-    | Sprint
-    | Fall
-
 type Unit =
     | Army of Zone * power
     | Fleet of Zone * power
@@ -31,3 +27,8 @@ type Move =
 type BuildAction = 
     | Create of Unit
     | Disband of Unit
+
+type Season = {name:string; phases:Phase list}
+
+let spring = {name="Spring"; phases=[Order; Retreat]}
+let fall = {name="Fall"; phases=[Order; Retreat; Build]}
