@@ -2,10 +2,10 @@
 
 type power = {name:string}
 
-type country = {name:string; owner:Power; isSupplyCenter:bool; isCoastal: bool;}
+type region = {name:string; owner:power; isSupplyCenter:bool; isCoastal: bool;}
 
 type Zone = 
-    | Country of country
+    | Region of region
     | Sea of string
 
 type Phase = 
