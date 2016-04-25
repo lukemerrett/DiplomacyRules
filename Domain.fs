@@ -16,7 +16,6 @@ type Phase =
 type Season = 
     | Sprint
     | Fall
-    | Winter
 
 type Unit =
     | Army of Zone * Power
