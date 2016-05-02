@@ -52,6 +52,7 @@
     <Compile Include="Seasons.fs" />
     <Compile Include="Powers.fs" />
     <Compile Include="Regions.fs" />
+    <Compile Include="GameLogic.fs" />
     <Compile Include="Program.fs" />
     <None Include="App.config" />
   </ItemGroup>
