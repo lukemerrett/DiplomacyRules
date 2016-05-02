@@ -2,12 +2,12 @@
 
 open Domain
 
-let england =   {power.name="England"}
-let france =    {power.name="France"}
-let italy =     {power.name="Italy"}
-let germany =   {power.name="Germany"}
-let austria =   {power.name="Austria"}
-let turkey =    {power.name="Turkey"}
-let russia =    {power.name="Russia"}
+let england =   {Power.name="England"}
+let france =    {Power.name="France"}
+let italy =     {Power.name="Italy"}
+let germany =   {Power.name="Germany"}
+let austria =   {Power.name="Austria"}
+let turkey =    {Power.name="Turkey"}
+let russia =    {Power.name="Russia"}
 
-let neutral =   {power.name="Neutral"}
+let neutral =   {Power.name="Neutral"}

@@ -1,11 +1,11 @@
 ﻿module Domain
 
-type power = {name:string}
+type Power = {name:string}
 
-type region = {name:string; owner:power; isSupplyCenter:bool; isCoastal: bool;}
+type Region = {name:string; owner:Power; isSupplyCenter:bool; isCoastal: bool;}
 
 type Zone = 
-    | Region of region
+    | Region of Region
     | Sea of string
 
 type Phase = 
@@ -14,8 +14,8 @@ type Phase =
     | Build
 
 type Unit =
-    | Army of Zone * power
-    | Fleet of Zone * power
+    | Army of Zone * Power
+    | Fleet of Zone * Power
 
 type Move =
     | MoveOrAttack of Unit * Zone * Zone                // Army moves from Zone to Zone
@@ -27,8 +27,3 @@ type Move =
 type BuildAction = 
     | Create of Unit
     | Disband of Unit
-
-type Season = {name:string; phases:Phase list}
-
-let spring = {name="Spring"; phases=[Order; Retreat]}
-let fall = {name="Fall"; phases=[Order; Retreat; Build]}

@@ -49,6 +49,7 @@
   <ItemGroup>
     <Compile Include="AssemblyInfo.fs" />
     <Compile Include="Domain.fs" />
+    <Compile Include="Seasons.fs" />
     <Compile Include="Powers.fs" />
     <Compile Include="Regions.fs" />
     <Compile Include="Program.fs" />
