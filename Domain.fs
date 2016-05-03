@@ -23,7 +23,5 @@ type Move =
     | SupportMovingUnit of Unit * Zone * Zone * Zone    // Army in Zone supports a unit moving from Zone to Zone
     | SupportHoldingUnit of Unit * Zone * Zone          // Army in Zone supports a unit holding in Zone
     | Convoy of Unit * Zone * Zone                      // Fleet in Zone convoys a unit to Zone
-
-type BuildAction = 
     | Create of Unit
     | Disband of Unit

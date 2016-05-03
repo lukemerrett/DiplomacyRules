@@ -3,11 +3,10 @@
 open Domain
 open Seasons
 open System
+open GameLogicTypes
 
 // Todo: As a player I can see if my move is valid
 // Todo: As a player I can see my move has been executed
-
-type CurrentTurnDetails = {year:int; season:Season; phase:Phase}
 
 // Responsible for tracking the year, season and phase currently in play.
 type YearTracker() =
@@ -49,13 +48,6 @@ type YearTracker() =
             phase=phaseToReturn
         }
 
-type MoveResult = 
-    | Invalid
-    | Valid
-
-type RequestedMove = {power:Power; move:Move}
-type MoveResponse = {requestedMove:RequestedMove; result:MoveResult}
-
 // Responsible for checking whether a move is valid. 
 type MoveValidator() =
     member this.ValidateMove move = 
@@ -69,11 +61,15 @@ type MoveValidator() =
 // Responsible for executing moves for players.
 type MoveExecutor(validator:MoveValidator) =
     let validator = validator
+
+    let executeValidatedMove moveResponse = 
+        raise(NotImplementedException())
+        moveResponse
      
     member this.ExecuteMove move = 
         let response = validator.ValidateMove move
         match response.result with  
-            | Valid -> response
+            | Valid -> executeValidatedMove response
             | Invalid -> response
 
 // Responsible for collecting and executing moves for a player.
