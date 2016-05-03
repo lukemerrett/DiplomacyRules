@@ -24,3 +24,16 @@ let moveIsValidForPhase (move:RequestedMove, turn:CurrentTurnDetails) =
                         | Create _ -> true
                         | Disband _ -> true
                         | _ -> false
+
+let unitCanMoveIntoRegionOfThisType (move:RequestedMove, turn:CurrentTurnDetails) =
+    raise(NotImplementedException())
+    match move.move with 
+        | MoveOrAttack (unit, fromZone, toZone) 
+            -> match unit with
+                | Army _ -> match toZone with
+                                | Region region -> true
+                                | Sea _ -> false
+                | Fleet _ -> match toZone with
+                                | Region region -> region.isCoastal
+                                | Sea _ -> true
+        | _ -> false
