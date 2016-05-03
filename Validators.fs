@@ -44,3 +44,18 @@ let unitIsAllowedToConvoy (move:RequestedMove, turn:CurrentTurnDetails) =
                                     | Fleet _ -> true
                                     | Army _ -> false
         | _ -> true
+
+let moveFromToDestinationIsValid (move:RequestedMove, turn:CurrentTurnDetails) = 
+    // Todo: Map which regions border one another to allow this validation to occur
+    // How would we best model this?
+    raise(NotImplementedException())
+
+let buildIsAllowedAtDestination (move:RequestedMove, turn:CurrentTurnDetails) =
+    // Todo: Identify a powers starting control centers
+    // Then identify whether the power stillowns that control center
+    // You can only build in one of your starting centers
+    raise(NotImplementedException())
+
+let disbandIsAllowedAtDestination (move:RequestedMove, turn:CurrentTurnDetails) =
+    // Todo: just check the power owns the zone and unit being disbanded
+    raise(NotImplementedException())
