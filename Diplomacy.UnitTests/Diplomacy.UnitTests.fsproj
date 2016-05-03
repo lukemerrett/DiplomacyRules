@@ -52,6 +52,7 @@
   <ItemGroup>
     <Compile Include="AssemblyInfo.fs" />
     <Compile Include="ValidatorsTests.fs" />
+    <Compile Include="GameLogicTests.fs" />
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
