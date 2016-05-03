@@ -184,3 +184,23 @@ type unitCanMoveIntoRegionOfThisTypeTests() =
         let requestedMove = requestedMove(unit, zone)
         let result = unitCanMoveIntoRegionOfThisType(requestedMove, turnDetails)
         Assert.IsTrue(result)
+
+[<TestFixture>]
+type unitIsAllowedToConvoyTests() = 
+    let zone = englishChannel
+    let turnDetails = {year=1901; season=spring; phase=Order}
+    let requestedMove(unit, zone) = {RequestedMove.power=england; move=Convoy(unit, zone, zone)}
+
+    [<Test>]
+    member this.``When a fleet attempts to convoy, move is allowed``() =
+        let unit = Fleet(zone, england)
+        let requestedMove = requestedMove(unit, zone)
+        let result = unitIsAllowedToConvoy(requestedMove, turnDetails)
+        Assert.IsTrue(result)
+    
+    [<Test>]
+    member this.``When an army attempts to convoy, move is invalid``() =
+        let unit = Army(zone, england)
+        let requestedMove = requestedMove(unit, zone)
+        let result = unitIsAllowedToConvoy(requestedMove, turnDetails)
+        Assert.IsFalse(result)
