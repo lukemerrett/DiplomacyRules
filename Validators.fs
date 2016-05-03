@@ -27,7 +27,7 @@ let moveIsValidForPhase (move:RequestedMove, turn:CurrentTurnDetails) =
 
 let unitCanMoveIntoRegionOfThisType (move:RequestedMove, turn:CurrentTurnDetails) =
     match move.move with 
-        | MoveOrAttack (unit, fromZone, toZone) 
+        | MoveOrAttack (unit, toZone) 
             -> match unit with
                 | Army _ -> match toZone with
                                 | Region region -> true
