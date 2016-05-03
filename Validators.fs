@@ -37,3 +37,10 @@ let unitCanMoveIntoRegionOfThisType (move:RequestedMove, turn:CurrentTurnDetails
                                 | Region region -> region.isCoastal
                                 | Sea _ -> true
         | _ -> false
+
+let unitIsAllowedToConvoy (move:RequestedMove, turn:CurrentTurnDetails) =
+    match move.move with
+        | Convoy (unit, _, _) -> match unit with 
+                                    | Fleet _ -> true
+                                    | Army _ -> false
+        | _ -> true
