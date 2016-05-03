@@ -64,6 +64,9 @@ let buildIsAllowedAtDestination (move:RequestedMove, turn:CurrentTurnDetails) =
                             | Fleet (zone, _) -> isBuildAllowed(zone, move.power)
         | _ -> true
 
-let disbandIsAllowedAtDestination (move:RequestedMove, turn:CurrentTurnDetails) =
-    // Todo: just check the power owns the zone and unit being disbanded
-    raise(NotImplementedException())
+let disbandIsAllowed (move:RequestedMove, turn:CurrentTurnDetails) =
+    match move.move with
+        | Disband unit -> match unit with
+                            | Army (zone, power) -> move.power.name = power.name
+                            | Fleet (zone, power) -> move.power.name = power.name
+        | _ -> true
