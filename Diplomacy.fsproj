@@ -52,6 +52,7 @@
     <Compile Include="Seasons.fs" />
     <Compile Include="Powers.fs" />
     <Compile Include="Regions.fs" />
+    <Compile Include="GameLogicTypes.fs" />
     <Compile Include="Validators.fs" />
     <Compile Include="GameLogic.fs" />
     <Compile Include="Program.fs" />
