@@ -1,5 +1,6 @@
 ﻿module ValidatorsTests
 
+open System
 open Domain
 open GameLogicTypes
 open Powers
@@ -204,3 +205,10 @@ type unitIsAllowedToConvoyTests() =
         let requestedMove = requestedMove(unit, zone)
         let result = unitIsAllowedToConvoy(requestedMove, turnDetails)
         Assert.IsFalse(result)
+
+[<TestFixture>]
+type moveFromToDestinationIsValidTests() =
+    [<Test>]
+    member this.``Check move is from a correct border destination to another``() =
+        raise(NotImplementedException())
+
