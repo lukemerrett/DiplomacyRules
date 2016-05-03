@@ -74,3 +74,5 @@ let greece =        {Region.name="Greece"; owner=neutral; isSupplyCenter=true; i
 let serbia =        {Region.name="Serbia"; owner=neutral; isSupplyCenter=true; isCoastal=false}
 let bulgaria =      {Region.name="Bulgaria"; owner=neutral; isSupplyCenter=true; isCoastal=true}
 let rumania =       {Region.name="Rumania"; owner=neutral; isSupplyCenter=true; isCoastal=true}
+
+// Todo: Map the seas as well
