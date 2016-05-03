@@ -49,26 +49,42 @@ type YearTracker() =
             phase=phaseToReturn
         }
 
+type MoveResult = 
+    | Invalid
+    | Valid
+
 type RequestedMove = {power:Power; move:Move}
+type MoveResponse = {requestedMove:RequestedMove; result:MoveResult}
 
-// Responsible for gathering, validating and executing moves for players.
-type MoveTracker() = 
-    let mutable moveList = []
-
-    let executeMove move = 
+// Responsible for checking whether a move is valid. 
+type MoveValidator() =
+    member this.ValidateMove move = 
         raise(NotImplementedException())
+        {MoveResponse.requestedMove=move; result=Valid}
+
+    member this.ValidateMoves moveList =
+        let results = moveList |> List.map this.ValidateMove
+        results
+
+// Responsible for executing moves for players.
+type MoveExecutor(validator:MoveValidator) =
+    let validator = validator
+     
+    member this.ExecuteMove move = 
+        let response = validator.ValidateMove move
+        match response.result with  
+            | Valid -> response
+            | Invalid -> response
+
+// Responsible for collecting and executing moves for a player.
+type MoveTracker(executor:MoveExecutor) =
+    let executor = executor     
+    let mutable moveList = []
 
     member this.GatherMove move =
         moveList <- move :: moveList  
 
-    member this.ValidateMove move = 
-        raise(NotImplementedException())
-
-    member this.ValidateMoves move =
-        let results = moveList |> List.map this.ValidateMove
-        results
-
     member this.ExecuteGatheredMoves() =
-        let results = moveList |> List.map executeMove
+        let results = moveList |> List.map executor.ExecuteMove
         moveList <- []
         results
