@@ -51,9 +51,21 @@ let moveFromToDestinationIsValid (move:RequestedMove, turn:CurrentTurnDetails) =
 
 let buildIsAllowedAtDestination (move:RequestedMove, turn:CurrentTurnDetails) =
     // Todo: Identify a powers starting control centers
-    // Then identify whether the power stillowns that control center
+    // Then identify whether the power still owns that control center
     // You can only build in one of your starting centers
+    // Maybe we can do this on the "Region" type, startingPower:Power
     raise(NotImplementedException())
+
+    let isSupplyCenter zone = 
+        match zone with
+            | Region region -> region.isSupplyCenter
+            | Sea _ -> false
+
+    match move.move with
+        | Create unit -> match unit with
+                            | Army (zone, _) -> isSupplyCenter zone
+                            | Fleet (zone, _) -> isSupplyCenter zone
+        | _ -> true
 
 let disbandIsAllowedAtDestination (move:RequestedMove, turn:CurrentTurnDetails) =
     // Todo: just check the power owns the zone and unit being disbanded
