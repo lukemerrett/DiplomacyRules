@@ -50,21 +50,18 @@ let moveFromToDestinationIsValid (move:RequestedMove, turn:CurrentTurnDetails) =
     raise(NotImplementedException())
 
 let buildIsAllowedAtDestination (move:RequestedMove, turn:CurrentTurnDetails) =
-    // Todo: Identify a powers starting control centers
-    // Then identify whether the power still owns that control center
-    // You can only build in one of your starting centers
-    // Maybe we can do this on the "Region" type, startingPower:Power
-    raise(NotImplementedException())
-
-    let isSupplyCenter zone = 
+    let isBuildAllowed(zone:Zone, executingPower:Power) =
         match zone with
-            | Region region -> region.isSupplyCenter
+            | Region region 
+                ->  region.isSupplyCenter
+                    && executingPower.name = region.owner.name
+                    && executingPower.name = region.startingPower.name
             | Sea _ -> false
 
     match move.move with
         | Create unit -> match unit with
-                            | Army (zone, _) -> isSupplyCenter zone
-                            | Fleet (zone, _) -> isSupplyCenter zone
+                            | Army (zone, _) -> isBuildAllowed(zone, move.power)
+                            | Fleet (zone, _) -> isBuildAllowed(zone, move.power)
         | _ -> true
 
 let disbandIsAllowedAtDestination (move:RequestedMove, turn:CurrentTurnDetails) =
