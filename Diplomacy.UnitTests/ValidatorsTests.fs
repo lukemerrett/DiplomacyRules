@@ -273,3 +273,37 @@ type buildIsAllowedAtDestinationTests() =
     member this.tearDown() =
         zone <- london 
         setOwnerTo england
+
+[<TestFixture>]
+type disbandIsAllowedTests() = 
+    let zone = englishChannel
+    let turnDetails = {year=1901; season=spring; phase=Order}
+    let requestedMove(unit) = {RequestedMove.power=england; move=Disband unit}
+    
+    [<Test>]
+    member this.``When power requests disband of army it owns, move is allowed``() =
+        let unit = Army(zone, england)
+        let requestedMove = requestedMove(unit)
+        let result = disbandIsAllowed(requestedMove, turnDetails)
+        Assert.IsTrue(result)
+
+    [<Test>]
+    member this.``When power requests disband of fleet it owns, move is allowed``() =
+        let unit = Fleet(zone, england)
+        let requestedMove = requestedMove(unit)
+        let result = disbandIsAllowed(requestedMove, turnDetails)
+        Assert.IsTrue(result)
+
+    [<Test>]
+    member this.``When power requests disband of army it does not own, move is invalid``() =
+        let unit = Army(zone, france)
+        let requestedMove = requestedMove(unit)
+        let result = disbandIsAllowed(requestedMove, turnDetails)
+        Assert.IsFalse(result)
+
+    [<Test>]
+    member this.``When power requests disband of fleet it does not own, move is invalid``() =
+        let unit = Fleet(zone, france)
+        let requestedMove = requestedMove(unit)
+        let result = disbandIsAllowed(requestedMove, turnDetails)
+        Assert.IsFalse(result)
