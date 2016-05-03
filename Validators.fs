@@ -26,7 +26,6 @@ let moveIsValidForPhase (move:RequestedMove, turn:CurrentTurnDetails) =
                         | _ -> false
 
 let unitCanMoveIntoRegionOfThisType (move:RequestedMove, turn:CurrentTurnDetails) =
-    raise(NotImplementedException())
     match move.move with 
         | MoveOrAttack (unit, fromZone, toZone) 
             -> match unit with
