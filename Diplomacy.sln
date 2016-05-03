@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.24720.0
+VisualStudioVersion = 14.0.25123.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Diplomacy", "Diplomacy.fsproj", "{BE7FAF84-564B-4E4A-843E-6278F14E2576}"
+EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Diplomacy.UnitTests", "Diplomacy.UnitTests\Diplomacy.UnitTests.fsproj", "{5E2F959E-3010-49FC-A3E2-E6FEBE123314}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{BE7FAF84-564B-4E4A-843E-6278F14E2576}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BE7FAF84-564B-4E4A-843E-6278F14E2576}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BE7FAF84-564B-4E4A-843E-6278F14E2576}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5E2F959E-3010-49FC-A3E2-E6FEBE123314}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5E2F959E-3010-49FC-A3E2-E6FEBE123314}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5E2F959E-3010-49FC-A3E2-E6FEBE123314}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5E2F959E-3010-49FC-A3E2-E6FEBE123314}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
