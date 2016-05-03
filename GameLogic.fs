@@ -5,9 +5,6 @@ open Seasons
 open System
 open GameLogicTypes
 
-// Todo: As a player I can see if my move is valid
-// Todo: As a player I can see my move has been executed
-
 // Responsible for tracking the year, season and phase currently in play.
 type YearTracker() =
     let mutable currentYear = {Year.year=1901; seasons=[spring; fall]}

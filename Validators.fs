@@ -4,10 +4,6 @@ open System
 open Domain
 open GameLogicTypes
 
-// List of validators to execute per move
-// Common interface (or F# alternative) so they can be executed
-// Alternatively, a list of functions to run all taking move and phase
-
 let moveIsValidForPhase (move:RequestedMove, turn:CurrentTurnDetails) = 
     match turn.phase with
         | Order -> match move.move with
@@ -45,8 +41,6 @@ let unitIsAllowedToConvoy (move:RequestedMove, turn:CurrentTurnDetails) =
         | _ -> true
 
 let moveFromToDestinationIsValid (move:RequestedMove, turn:CurrentTurnDetails) = 
-    // Todo: Map which regions border one another to allow this validation to occur
-    // How would we best model this?
     raise(NotImplementedException())
 
 let buildIsAllowedAtDestination (move:RequestedMove, turn:CurrentTurnDetails) =
