@@ -2,7 +2,7 @@
 
 type Power = {name:string}
 
-type Region = {name:string; owner:Power; startingPower:Power; isSupplyCenter:bool; isCoastal: bool;}
+type Region = {name:string; mutable owner:Power; startingPower:Power; isSupplyCenter:bool; isCoastal: bool;}
 
 type Zone = 
     | Region of Region

@@ -212,3 +212,64 @@ type moveFromToDestinationIsValidTests() =
     member this.``Check move is from a correct border destination to another``() =
         raise(NotImplementedException())
 
+[<TestFixture>]
+type buildIsAllowedAtDestinationTests() =
+    let turnDetails = {year=1901; season=spring; phase=Order}
+    let requestedMove(unit, zone) = {RequestedMove.power=england; move=Create unit}
+    let mutable zone = london
+
+    let setOwnerTo(newOwner) = 
+        match zone with
+            | Region region -> region.owner <- newOwner
+            | _ -> ()
+
+    [<Test>]
+    member this.``When power requests to build army in owned starting control center, move is allowed``() =
+        let unit = Army(zone, england)
+        let requestedMove = requestedMove(unit, zone)
+        let result = buildIsAllowedAtDestination(requestedMove, turnDetails)
+        Assert.IsTrue(result)
+
+    [<Test>]
+    member this.``When power requests to build fleet in owned starting control center, move is allowed``() =
+        let unit = Fleet(zone, england)
+        let requestedMove = requestedMove(unit, zone)
+        let result = buildIsAllowedAtDestination(requestedMove, turnDetails)
+        Assert.IsTrue(result)
+
+    [<Test>]
+    member this.``When power requests to build army in lost control center, move is invalid``() =
+        setOwnerTo france
+        let unit = Army(zone, england)
+        let requestedMove = requestedMove(unit, zone)
+        let result = buildIsAllowedAtDestination(requestedMove, turnDetails)
+        Assert.IsFalse(result)
+
+    [<Test>]
+    member this.``When power requests to build fleet in lost control center, move is invalid``() =
+        setOwnerTo france
+        let unit = Fleet(zone, england)
+        let requestedMove = requestedMove(unit, zone)
+        let result = buildIsAllowedAtDestination(requestedMove, turnDetails)
+        Assert.IsFalse(result)
+
+    [<Test>]
+    member this.``When power requests to build army in non starting control center, move is invalid``() =
+        zone <- paris
+        let unit = Army(zone, england)
+        let requestedMove = requestedMove(unit, zone)
+        let result = buildIsAllowedAtDestination(requestedMove, turnDetails)
+        Assert.IsFalse(result)
+
+    [<Test>]
+    member this.``When power requests to build fleet in non starting control center, move is invalid``() =
+        zone <- paris
+        let unit = Fleet(zone, england)
+        let requestedMove = requestedMove(unit, zone)
+        let result = buildIsAllowedAtDestination(requestedMove, turnDetails)
+        Assert.IsFalse(result)
+
+    [<TearDown>]
+    member this.tearDown() =
+        zone <- london 
+        setOwnerTo england
