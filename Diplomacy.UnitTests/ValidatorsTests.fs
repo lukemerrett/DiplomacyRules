@@ -10,10 +10,9 @@ open NUnit.Framework
 
 [<TestFixture>]
 type moveIsValidForPhaseTests() =
-    let zone = Region london
+    let zone = london
     let unit = Army(zone, england)
-    let turnDetails (phase:Phase) = 
-        {year=1901; season=spring; phase=phase}
+    let turnDetails (phase:Phase) = {year=1901; season=spring; phase=phase}
 
     [<Test>]
     member this.``When in order phase, move or attack move is allowed``() =
@@ -136,7 +135,52 @@ type moveIsValidForPhaseTests() =
         Assert.IsTrue(result)
 
     [<Test>]
-    member this.``When in build phase, disband unit move is invalid``() =
+    member this.``When in build phase, disband unit move is allowed``() =
         let requestedMove = {RequestedMove.power=england; move=Disband unit}
         let result = moveIsValidForPhase(requestedMove, turnDetails Build)
+        Assert.IsTrue(result)
+
+[<TestFixture>]
+type unitCanMoveIntoRegionOfThisTypeTests() = 
+    let turnDetails = {year=1901; season=spring; phase=Order}
+    let requestedMove(unit, zone) = {RequestedMove.power=england; move=MoveOrAttack(unit, zone)}
+
+    [<Test>]
+    member this.``When an army attempts to move to a region, move is allowed``() =
+        let zone = london
+        let unit = Army(zone, england)
+        let requestedMove = requestedMove(unit, zone)
+        let result = unitCanMoveIntoRegionOfThisType(requestedMove, turnDetails)
+        Assert.IsTrue(result)
+
+    [<Test>]
+    member this.``When an army attempts to move to a sea, move is invalid``() =
+        let zone = englishChannel
+        let unit = Army(zone, england)
+        let requestedMove = requestedMove(unit, zone)
+        let result = unitCanMoveIntoRegionOfThisType(requestedMove, turnDetails)
+        Assert.IsFalse(result)
+
+    [<Test>]
+    member this.``When a fleet attempts to move to a coastal region, move is allowed``() =
+        let zone = london
+        let unit = Fleet(zone, england)
+        let requestedMove = requestedMove(unit, zone)
+        let result = unitCanMoveIntoRegionOfThisType(requestedMove, turnDetails)
+        Assert.IsTrue(result)
+
+    [<Test>]
+    member this.``When a fleet attempts to move to a landlocked region, move is invalid``() =
+        let zone = paris
+        let unit = Fleet(zone, england)
+        let requestedMove = requestedMove(unit, zone)
+        let result = unitCanMoveIntoRegionOfThisType(requestedMove, turnDetails)
+        Assert.IsFalse(result)
+
+    [<Test>]
+    member this.``When a fleet attempts to move to a sea, move is allowed``() =
+        let zone = englishChannel
+        let unit = Fleet(zone, england)
+        let requestedMove = requestedMove(unit, zone)
+        let result = unitCanMoveIntoRegionOfThisType(requestedMove, turnDetails)
         Assert.IsTrue(result)

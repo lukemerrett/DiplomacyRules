@@ -74,3 +74,6 @@ let greece =        Region {Region.name="Greece"; owner=neutral; startingPower=n
 let serbia =        Region {Region.name="Serbia"; owner=neutral; startingPower=neutral; isSupplyCenter=true; isCoastal=false}
 let bulgaria =      Region {Region.name="Bulgaria"; owner=neutral; startingPower=neutral; isSupplyCenter=true; isCoastal=true}
 let rumania =       Region {Region.name="Rumania"; owner=neutral; startingPower=neutral; isSupplyCenter=true; isCoastal=true}
+
+// Seas
+let englishChannel =    Sea "English Channel"
