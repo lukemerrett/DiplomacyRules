@@ -1,8 +1,11 @@
 ﻿module GameLogicTests
 
 open Domain
+open GameLogicTypes
 open GameLogic
 open Seasons
+open Regions
+open Powers
 open NUnit.Framework
 
 let printDetails (tracker:YearTracker) = 
@@ -68,3 +71,28 @@ type YearTrackerTests() =
         Assert.AreEqual(1902, details.year)
         Assert.AreEqual(spring, details.season)
         Assert.AreEqual(Order, details.phase)
+
+[<TestFixture>]
+type MoveTrackerTests() = 
+    let yearTracker = YearTracker()
+    let validator = MoveValidator()
+    let executor = MoveExecutor(validator)
+    let moveTracker = MoveTracker(yearTracker, executor)
+  
+    [<Test>]
+    member this.``When sample turn is performed, validates and executes the results as expected``() =
+        let unit = Army(wales, england)
+
+        let firstMove = {RequestedMove.power=england; move=MoveOrAttack(unit, wales)}
+        moveTracker.GatherMove(firstMove)
+        
+        let secondMove = {RequestedMove.power=england; move=MoveOrAttack(unit, yorkshire)}
+        moveTracker.GatherMove(secondMove)
+
+        let results = moveTracker.ExecuteGatheredMoves()
+
+        let turnDetails = yearTracker.GetCurrentTurnDetails()
+
+        Assert.AreEqual(1901, turnDetails.year)
+        Assert.AreEqual(spring, turnDetails.season)
+        Assert.AreEqual(Retreat, turnDetails.phase)
