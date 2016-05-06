@@ -7,7 +7,7 @@ open GameLogicTypes
 open Validators
 
 // Responsible for tracking the year, season and phase currently in play.
-type YearTracker() =
+type internal YearTracker() =
     let mutable currentYear = {Year.year=1901; seasons=[spring; fall]}
     let mutable currentSeason = 0
     let mutable currentPhase = 0
@@ -47,7 +47,7 @@ type YearTracker() =
         }
 
 // Responsible for checking whether a move is valid. 
-type MoveValidator() =
+type internal MoveValidator() =
     let validator = ValidatorMap()
 
     member this.ValidateMove(move, turnDetails) = 
@@ -60,7 +60,7 @@ type MoveValidator() =
         }
 
 // Responsible for executing moves for players.
-type MoveExecutor(validator:MoveValidator) =
+type internal MoveExecutor(validator:MoveValidator) =
     let validator = validator
 
     let executeValidatedMove moveResponse = 
@@ -74,9 +74,9 @@ type MoveExecutor(validator:MoveValidator) =
             | Invalid -> response
 
 // Responsible for collecting and executing moves for a player.
-type MoveTracker(yearTracker:YearTracker, executor:MoveExecutor) =
-    let yearTracker = yearTracker
-    let executor = executor     
+type public MoveTracker() =
+    let yearTracker = YearTracker()
+    let executor = MoveExecutor(MoveValidator())
     let mutable moveList = []
 
     member this.GatherMove move =
@@ -88,3 +88,6 @@ type MoveTracker(yearTracker:YearTracker, executor:MoveExecutor) =
         moveList <- []
         yearTracker.EndTurn()
         results
+
+    member this.GetCurrentTurnDetails() = 
+        yearTracker.GetCurrentTurnDetails()

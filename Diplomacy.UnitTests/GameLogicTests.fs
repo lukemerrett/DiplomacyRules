@@ -8,7 +8,7 @@ open Regions
 open Powers
 open NUnit.Framework
 
-let printDetails (tracker:YearTracker) = 
+let internal printDetails (tracker:YearTracker) = 
     let details = tracker.GetCurrentTurnDetails()
     printf "%i: %s - %A \n" details.year details.season.name details.phase
 
@@ -74,10 +74,7 @@ type YearTrackerTests() =
 
 [<TestFixture>]
 type MoveTrackerTests() = 
-    let yearTracker = YearTracker()
-    let validator = MoveValidator()
-    let executor = MoveExecutor(validator)
-    let moveTracker = MoveTracker(yearTracker, executor)
+    let moveTracker = MoveTracker()
   
     [<Test>]
     member this.``When sample turn is performed, validates and executes the results as expected``() =
@@ -91,7 +88,7 @@ type MoveTrackerTests() =
 
         let results = moveTracker.ExecuteGatheredMoves()
 
-        let turnDetails = yearTracker.GetCurrentTurnDetails()
+        let turnDetails = moveTracker.GetCurrentTurnDetails()
 
         Assert.AreEqual(1901, turnDetails.year)
         Assert.AreEqual(spring, turnDetails.season)

@@ -4,7 +4,7 @@ open System
 open Domain
 open GameLogicTypes
 
-let moveIsValidForPhase (move:RequestedMove, turn:CurrentTurnDetails) = 
+let internal moveIsValidForPhase (move:RequestedMove, turn:CurrentTurnDetails) = 
     match turn.phase with
         | Order -> match move.move with
                         | MoveOrAttack _ -> Passed
@@ -21,7 +21,7 @@ let moveIsValidForPhase (move:RequestedMove, turn:CurrentTurnDetails) =
                         | Disband _ -> Passed
                         | _ -> Failed
 
-let unitCanMoveIntoRegionOfThisType (move:RequestedMove, turn:CurrentTurnDetails) =
+let internal unitCanMoveIntoRegionOfThisType (move:RequestedMove, turn:CurrentTurnDetails) =
     match move.move with 
         | MoveOrAttack (unit, toZone) 
             -> match unit with
@@ -33,17 +33,17 @@ let unitCanMoveIntoRegionOfThisType (move:RequestedMove, turn:CurrentTurnDetails
                                 | Sea _ -> Passed
         | _ -> NotApplicable
 
-let unitIsAllowedToConvoy (move:RequestedMove, turn:CurrentTurnDetails) =
+let internal unitIsAllowedToConvoy (move:RequestedMove, turn:CurrentTurnDetails) =
     match move.move with
         | Convoy (unit, _, _) -> match unit with 
                                     | Fleet _ -> Passed
                                     | Army _ -> Failed
         | _ -> NotApplicable
 
-let moveFromToDestinationIsValid (move:RequestedMove, turn:CurrentTurnDetails) = 
+let internal moveFromToDestinationIsValid (move:RequestedMove, turn:CurrentTurnDetails) = 
     Passed
 
-let buildIsAllowedAtDestination (move:RequestedMove, turn:CurrentTurnDetails) =
+let internal buildIsAllowedAtDestination (move:RequestedMove, turn:CurrentTurnDetails) =
     let isBuildAllowed(zone:Zone, executingPower:Power) =
         match zone with
             | Region region 
@@ -60,14 +60,14 @@ let buildIsAllowedAtDestination (move:RequestedMove, turn:CurrentTurnDetails) =
                             | Fleet (zone, _) -> isBuildAllowed(zone, move.power)
         | _ -> NotApplicable
 
-let disbandIsAllowed (move:RequestedMove, turn:CurrentTurnDetails) =
+let internal disbandIsAllowed (move:RequestedMove, turn:CurrentTurnDetails) =
     match move.move with
         | Disband unit -> match unit with
                             | Army (zone, power) -> if move.power.name = power.name then Passed else Failed
                             | Fleet (zone, power) -> if move.power.name = power.name then Passed else Failed
         | _ -> NotApplicable
 
-let unitIsOwnedByPower (move:RequestedMove, turn:CurrentTurnDetails) =
+let internal unitIsOwnedByPower (move:RequestedMove, turn:CurrentTurnDetails) =
     let isOwned(unit) = 
         match unit with
             | Army(_, power) | Fleet(_, power) 
@@ -83,7 +83,7 @@ let unitIsOwnedByPower (move:RequestedMove, turn:CurrentTurnDetails) =
         | Convoy(unit, _, _)
             -> isOwned(unit)
 
-type ValidatorMap() = 
+type internal ValidatorMap() = 
     let validations = [
         ("Move is valid for phase", moveIsValidForPhase);
         ("Unit can move into region of this type", unitCanMoveIntoRegionOfThisType);
