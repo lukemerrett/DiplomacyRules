@@ -7,6 +7,14 @@ Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Diplomacy", "Diplomacy.fspr
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Diplomacy.UnitTests", "Diplomacy.UnitTests\Diplomacy.UnitTests.fsproj", "{5E2F959E-3010-49FC-A3E2-E6FEBE123314}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1 - Application", "1 - Application", "{11E87C4F-067E-4A5E-8697-A466525ED973}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3 - Tests", "3 - Tests", "{3D9315C5-6D56-48DA-BA8D-246600405318}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2 - Endpoints", "2 - Endpoints", "{B7AA6318-309A-45C0-AAED-19F6E6B25CA3}"
+EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Diplomacy.Cli", "..\Diplomacy.Cli\Diplomacy.Cli.fsproj", "{78549468-6DF3-4798-970F-8B82D76677DD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,8 +29,17 @@ Global
 		{5E2F959E-3010-49FC-A3E2-E6FEBE123314}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5E2F959E-3010-49FC-A3E2-E6FEBE123314}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5E2F959E-3010-49FC-A3E2-E6FEBE123314}.Release|Any CPU.Build.0 = Release|Any CPU
+		{78549468-6DF3-4798-970F-8B82D76677DD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{78549468-6DF3-4798-970F-8B82D76677DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{78549468-6DF3-4798-970F-8B82D76677DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{78549468-6DF3-4798-970F-8B82D76677DD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{BE7FAF84-564B-4E4A-843E-6278F14E2576} = {11E87C4F-067E-4A5E-8697-A466525ED973}
+		{5E2F959E-3010-49FC-A3E2-E6FEBE123314} = {3D9315C5-6D56-48DA-BA8D-246600405318}
+		{78549468-6DF3-4798-970F-8B82D76677DD} = {B7AA6318-309A-45C0-AAED-19F6E6B25CA3}
 	EndGlobalSection
 EndGlobal
