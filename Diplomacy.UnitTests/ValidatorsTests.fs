@@ -210,7 +210,7 @@ type unitIsAllowedToConvoyTests() =
 type moveFromToDestinationIsValidTests() =
     [<Test>]
     member this.``Check move is from a correct border destination to another``() =
-        raise(NotImplementedException())
+        Assert.Fail("Not Implemented")
 
 [<TestFixture>]
 type buildIsAllowedAtDestinationTests() =
