@@ -64,3 +64,22 @@ let disbandIsAllowed (move:RequestedMove, turn:CurrentTurnDetails) =
                             | Army (zone, power) -> move.power.name = power.name
                             | Fleet (zone, power) -> move.power.name = power.name
         | _ -> true
+
+type ValidatorMap(move:RequestedMove, turn:CurrentTurnDetails) =
+    let move = move
+    let turn = turn
+
+    let validations = [
+        moveIsValidForPhase;
+        unitCanMoveIntoRegionOfThisType;
+        unitIsAllowedToConvoy;
+        moveFromToDestinationIsValid;
+        buildIsAllowedAtDestination;
+        disbandIsAllowed;
+    ]
+
+    member this.RunValidators() =
+        validations 
+            |> List.map (
+                fun(validation) -> validation(move, turn)
+            ) 
