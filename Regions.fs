@@ -76,4 +76,22 @@ let bulgaria =      Region {Region.name="Bulgaria"; owner=neutral; startingPower
 let rumania =       Region {Region.name="Rumania"; owner=neutral; startingPower=neutral; isSupplyCenter=true; isCoastal=true}
 
 // Seas
+let northAtlantic =     Sea "North Atlantic"
+let norwegianSea =      Sea "Norwegian Sea"
+let barentsSea =        Sea "Barents Sea"
+let irishSea =          Sea "Irish Sea"
+let northSea =          Sea "North Sea"
+let skagerak =          Sea "Skagerak"
+let gulfOfBothnia =     Sea "Gulf of Bothnia"
+let midAtlantic =       Sea "Mid Atlantic"
 let englishChannel =    Sea "English Channel"
+let helgolandBight =    Sea "Helgoland Bight"
+let balticSea =         Sea "Baltic Sea"
+let gulfOfLyon =        Sea "Gulf of Lyon"
+let westMediterranean = Sea "West Mediterranean"
+let tyrhennianSea =     Sea "Tyrhennian Sea"
+let adriaticSea =       Sea "Adriatic Sea"
+let ionianSea =         Sea "Ionian Sea"
+let aegeanSea =         Sea "Aegean Sea"
+let blackSea =          Sea "Black Sea"
+let eastMediterranean = Sea "East Mediterranean"
