@@ -4,6 +4,7 @@ open Domain
 open Seasons
 open System
 open GameLogicTypes
+open Validators
 
 // Responsible for tracking the year, season and phase currently in play.
 type YearTracker() =
@@ -47,13 +48,16 @@ type YearTracker() =
 
 // Responsible for checking whether a move is valid. 
 type MoveValidator() =
-    member this.ValidateMove move = 
-        raise(NotImplementedException())
-        {MoveResponse.requestedMove=move; result=Valid}
+    let validator = ValidatorMap()
 
-    member this.ValidateMoves moveList =
-        let results = moveList |> List.map this.ValidateMove
-        results
+    member this.ValidateMove(move, turnDetails) = 
+        let validationResults = validator.RunValidators(move, turnDetails)
+        let failedRows = (validationResults |> List.filter (fun x -> x.result = Failed)).Length
+        {
+            MoveResponse.requestedMove=move; 
+            result=if failedRows = 0 then Valid else Invalid; 
+            validations=validationResults
+        }
 
 // Responsible for executing moves for players.
 type MoveExecutor(validator:MoveValidator) =
@@ -63,21 +67,24 @@ type MoveExecutor(validator:MoveValidator) =
         raise(NotImplementedException())
         moveResponse
      
-    member this.ExecuteMove move = 
-        let response = validator.ValidateMove move
+    member this.ExecuteMove(move, turnDetails) = 
+        let response = validator.ValidateMove(move, turnDetails)
         match response.result with  
             | Valid -> executeValidatedMove response
             | Invalid -> response
 
 // Responsible for collecting and executing moves for a player.
-type MoveTracker(executor:MoveExecutor) =
+type MoveTracker(yearTracker:YearTracker, executor:MoveExecutor) =
+    let yearTracker = yearTracker
     let executor = executor     
     let mutable moveList = []
 
     member this.GatherMove move =
         moveList <- move :: moveList  
 
-    member this.ExecuteGatheredMoves() =
-        let results = moveList |> List.map executor.ExecuteMove
+    member this.ExecuteGatheredMoves(turnDetails) =
+        let turnDetails = yearTracker.GetCurrentTurnDetails()
+        let results = moveList |> List.map (fun x -> executor.ExecuteMove(x, turnDetails))
         moveList <- []
+        yearTracker.EndTurn()
         results

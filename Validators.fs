@@ -4,13 +4,6 @@ open System
 open Domain
 open GameLogicTypes
 
-type ResultType =
-    | Passed
-    | Failed
-    | NotApplicable
-
-type ValidationResult = {validationName:string; result:ResultType}
-
 let moveIsValidForPhase (move:RequestedMove, turn:CurrentTurnDetails) = 
     match turn.phase with
         | Order -> match move.move with
