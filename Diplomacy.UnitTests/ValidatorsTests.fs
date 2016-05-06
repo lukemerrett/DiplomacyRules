@@ -341,6 +341,96 @@ type disbandIsAllowedTests() =
         Assert.AreEqual(NotApplicable, result)
 
 [<TestFixture>]
+type unitIsOwnedByPowerTests() = 
+    let zone = englishChannel
+    let turnDetails = {year=1901; season=spring; phase=Order}
+    let unit = Army(zone, england)
+    
+    [<Test>]
+    member this.``When move requested by power owning unit, move is allowed``() =
+        let requestedMove = {RequestedMove.power=england; move=MoveOrAttack(unit, zone)}
+        let result = unitIsOwnedByPower(requestedMove, turnDetails)
+        Assert.AreEqual(Passed, result)
+
+    [<Test>]
+    member this.``When hold requested by power owning unit, move is allowed``() =
+        let requestedMove = {RequestedMove.power=england; move=Hold unit}
+        let result = unitIsOwnedByPower(requestedMove, turnDetails)
+        Assert.AreEqual(Passed, result)
+
+    [<Test>]
+    member this.``When support moving unit requested by power owning unit, move is allowed``() =
+        let requestedMove = {RequestedMove.power=england; move=SupportMovingUnit(unit, zone, zone)}
+        let result = unitIsOwnedByPower(requestedMove, turnDetails)
+        Assert.AreEqual(Passed, result)
+
+    [<Test>]
+    member this.``When support holding unit requested by power owning unit, move is allowed``() =
+        let requestedMove = {RequestedMove.power=england; move=SupportHoldingUnit(unit, zone)}
+        let result = unitIsOwnedByPower(requestedMove, turnDetails)
+        Assert.AreEqual(Passed, result)
+
+    [<Test>]
+    member this.``When disband requested by power owning unit, move is allowed``() =
+        let requestedMove = {RequestedMove.power=england; move=Disband unit}
+        let result = unitIsOwnedByPower(requestedMove, turnDetails)
+        Assert.AreEqual(Passed, result)
+
+    [<Test>]
+    member this.``When convoy requested by power owning unit, move is allowed``() =
+        let requestedMove = {RequestedMove.power=england; move=Convoy(unit, zone, zone)}
+        let result = unitIsOwnedByPower(requestedMove, turnDetails)
+        Assert.AreEqual(Passed, result)
+
+    [<Test>]
+    member this.``When create requested by power owning unit, move is allowed``() =
+        let requestedMove = {RequestedMove.power=england; move=Create unit}
+        let result = unitIsOwnedByPower(requestedMove, turnDetails)
+        Assert.AreEqual(Passed, result)
+    
+    [<Test>]
+    member this.``When move requested by power that doesn't own unit, move is invalid``() =
+        let requestedMove = {RequestedMove.power=france; move=MoveOrAttack(unit, zone)}
+        let result = unitIsOwnedByPower(requestedMove, turnDetails)
+        Assert.AreEqual(Failed, result)
+
+    [<Test>]
+    member this.``When hold requested by power that doesn't own unit, move is invalid``() =
+        let requestedMove = {RequestedMove.power=france; move=Hold unit}
+        let result = unitIsOwnedByPower(requestedMove, turnDetails)
+        Assert.AreEqual(Failed, result)
+
+    [<Test>]
+    member this.``When support moving unit requested by power that doesn't own unit, move is invalid``() =
+        let requestedMove = {RequestedMove.power=france; move=SupportMovingUnit(unit, zone, zone)}
+        let result = unitIsOwnedByPower(requestedMove, turnDetails)
+        Assert.AreEqual(Failed, result)
+
+    [<Test>]
+    member this.``When support holding unit requested by power that doesn't own unit, move is invalid``() =
+        let requestedMove = {RequestedMove.power=france; move=SupportHoldingUnit(unit, zone)}
+        let result = unitIsOwnedByPower(requestedMove, turnDetails)
+        Assert.AreEqual(Failed, result)
+
+    [<Test>]
+    member this.``When disband requested by power that doesn't own unit, move is invalid``() =
+        let requestedMove = {RequestedMove.power=france; move=Disband unit}
+        let result = unitIsOwnedByPower(requestedMove, turnDetails)
+        Assert.AreEqual(Failed, result)
+
+    [<Test>]
+    member this.``When convoy requested by power that doesn't own unit, move is invalid``() =
+        let requestedMove = {RequestedMove.power=france; move=Convoy(unit, zone, zone)}
+        let result = unitIsOwnedByPower(requestedMove, turnDetails)
+        Assert.AreEqual(Failed, result)
+
+    [<Test>]
+    member this.``When create requested by power that doesn't own unit, move is invalid``() =
+        let requestedMove = {RequestedMove.power=france; move=Create unit}
+        let result = unitIsOwnedByPower(requestedMove, turnDetails)
+        Assert.AreEqual(Failed, result)
+
+[<TestFixture>]
 type ValidatorMapTests() =  
     let checkResult (r:ValidationResult, expected:ResultType) =
         let errorMessage = (

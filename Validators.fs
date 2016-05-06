@@ -85,9 +85,10 @@ let unitIsOwnedByPower (move:RequestedMove, turn:CurrentTurnDetails) =
         | Hold(unit)
         | SupportMovingUnit(unit, _, _)
         | SupportHoldingUnit(unit, _)
+        | Create(unit)
         | Disband(unit) 
+        | Convoy(unit, _, _)
             -> isOwned(unit)
-        | _ -> NotApplicable
 
 type ValidatorMap() = 
     let validations = [
