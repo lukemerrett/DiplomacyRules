@@ -13,7 +13,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3 - Tests", "3 - Tests", "{
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2 - Endpoints", "2 - Endpoints", "{B7AA6318-309A-45C0-AAED-19F6E6B25CA3}"
 EndProject
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Diplomacy.Cli", "..\Diplomacy.Cli\Diplomacy.Cli.fsproj", "{78549468-6DF3-4798-970F-8B82D76677DD}"
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Diplomacy.Cli", "Diplomacy.Cli\Diplomacy.Cli.fsproj", "{78549468-6DF3-4798-970F-8B82D76677DD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
