@@ -339,3 +339,35 @@ type disbandIsAllowedTests() =
         let requestedMove = {RequestedMove.power=england; move=Create(unit)}
         let result = unitIsAllowedToConvoy(requestedMove, turnDetails)
         Assert.AreEqual(NotApplicable, result)
+
+[<TestFixture>]
+type ValidatorMapTests() =  
+    let checkResult (r:ValidationResult, expected:ResultType) =
+        let errorMessage = (
+            sprintf 
+                "Incorrect response from validator: '%s'. Expected: '%A'. Actual: '%A'" 
+                r.validationName 
+                expected 
+                r.result
+            )
+        Assert.AreEqual(expected, r.result, errorMessage)
+
+    [<Test>]
+    member this.``When given a move to validate, returns a list of results for validators run``() =
+        let zone = wales
+        let turnDetails = {year=1901; season=spring; phase=Order}
+        let unit = Army(zone, england)
+        let requestedMove = {RequestedMove.power=england; move=MoveOrAttack(unit, zone)}
+        
+        let map = ValidatorMap()
+        let results = map.RunValidators(requestedMove, turnDetails)
+            
+        for r in results do
+            match r.validationName with
+                | "Move is valid for phase" -> checkResult(r, Passed)
+                | "Unit can move into region of this type" -> checkResult(r, Passed)
+                | "Unit is allowed to convoy" -> checkResult(r, NotApplicable)
+                | "Can move to destination" -> checkResult(r, Passed)
+                | "Build is allowed at destination" -> checkResult(r, NotApplicable)
+                | "Disband is allowed" -> checkResult(r, NotApplicable)
+                | _ -> Assert.Fail("No tests written for validator:" + r.validationName)

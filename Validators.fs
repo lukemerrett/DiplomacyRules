@@ -48,7 +48,7 @@ let unitIsAllowedToConvoy (move:RequestedMove, turn:CurrentTurnDetails) =
         | _ -> NotApplicable
 
 let moveFromToDestinationIsValid (move:RequestedMove, turn:CurrentTurnDetails) = 
-    raise(NotImplementedException())
+    Failed
 
 let buildIsAllowedAtDestination (move:RequestedMove, turn:CurrentTurnDetails) =
     let isBuildAllowed(zone:Zone, executingPower:Power) =
@@ -74,10 +74,7 @@ let disbandIsAllowed (move:RequestedMove, turn:CurrentTurnDetails) =
                             | Fleet (zone, power) -> if move.power.name = power.name then Passed else Failed
         | _ -> NotApplicable
 
-type ValidatorMap(move:RequestedMove, turn:CurrentTurnDetails) =
-    let move = move
-    let turn = turn
-
+type ValidatorMap() = 
     let validations = [
         ("Move is valid for phase", moveIsValidForPhase);
         ("Unit can move into region of this type", unitCanMoveIntoRegionOfThisType);
@@ -87,7 +84,7 @@ type ValidatorMap(move:RequestedMove, turn:CurrentTurnDetails) =
         ("Disband is allowed", disbandIsAllowed);
     ]
 
-    member this.RunValidators() =
+    member this.RunValidators(move:RequestedMove, turn:CurrentTurnDetails) =
         let runValidation validationTuple =
             let (name, validation) = validationTuple // Unwrap tuple
             let result = validation(move, turn)
