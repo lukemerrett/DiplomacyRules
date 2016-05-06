@@ -48,7 +48,7 @@ let unitIsAllowedToConvoy (move:RequestedMove, turn:CurrentTurnDetails) =
         | _ -> NotApplicable
 
 let moveFromToDestinationIsValid (move:RequestedMove, turn:CurrentTurnDetails) = 
-    Failed
+    Passed
 
 let buildIsAllowedAtDestination (move:RequestedMove, turn:CurrentTurnDetails) =
     let isBuildAllowed(zone:Zone, executingPower:Power) =
@@ -74,6 +74,21 @@ let disbandIsAllowed (move:RequestedMove, turn:CurrentTurnDetails) =
                             | Fleet (zone, power) -> if move.power.name = power.name then Passed else Failed
         | _ -> NotApplicable
 
+let unitIsOwnedByPower (move:RequestedMove, turn:CurrentTurnDetails) =
+    let isOwned(unit) = 
+        match unit with
+            | Army(_, power) | Fleet(_, power) 
+                -> if power.name = move.power.name then Passed else Failed
+
+    match move.move with 
+        | MoveOrAttack(unit, _)
+        | Hold(unit)
+        | SupportMovingUnit(unit, _, _)
+        | SupportHoldingUnit(unit, _)
+        | Disband(unit) 
+            -> isOwned(unit)
+        | _ -> NotApplicable
+
 type ValidatorMap() = 
     let validations = [
         ("Move is valid for phase", moveIsValidForPhase);
@@ -82,6 +97,7 @@ type ValidatorMap() =
         ("Can move to destination", moveFromToDestinationIsValid);
         ("Build is allowed at destination", buildIsAllowedAtDestination);
         ("Disband is allowed", disbandIsAllowed);
+        ("Unit is owned by power", unitIsOwnedByPower)
     ]
 
     member this.RunValidators(move:RequestedMove, turn:CurrentTurnDetails) =

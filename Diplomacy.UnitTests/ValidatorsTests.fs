@@ -370,4 +370,5 @@ type ValidatorMapTests() =
                 | "Can move to destination" -> checkResult(r, Passed)
                 | "Build is allowed at destination" -> checkResult(r, NotApplicable)
                 | "Disband is allowed" -> checkResult(r, NotApplicable)
+                | "Unit is owned by power" -> checkResult(r, Passed)
                 | _ -> Assert.Fail("No tests written for validator:" + r.validationName)
